@@ -2,10 +2,8 @@
 #include "version.h"
 #include <QtTest/QtTest>
 
-class TestMain : public QObject {
+class TestVersion : public QObject {
   Q_OBJECT
 private slots:
-  void TestVersion();
+  void Test();
 };
-
-QTEST_MAIN(TestMain)

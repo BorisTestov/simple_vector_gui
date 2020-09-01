@@ -1,40 +1,17 @@
 find_package(Qt5 REQUIRED COMPONENTS Test)
 
-set(TESTS_INCLUDE_DIR ${INCLUDE_DIR}/tests)
-set(TESTS_SRC_DIR ${SRC_DIR}/tests)
+include_directories(${INCLUDE_DIR}/tests)
 
-# Add tests
-set(main_test "${PROJECT_NAME}_test")
-
-# Set sources
-aux_source_directory(${SRC_DIR} TEST_SOURCES)
-
-aux_source_directory(${INCLUDE_DIR} TEST_HEADERS)
-
+file (GLOB TEST_SOURCES "${SRC_DIR}/*.cpp" "${SRC_DIR}/tests/*.cpp")
+file (GLOB TEST_HEADERS
+        "${INCLUDE_DIR}/*.h" "${INCLUDE_DIR}/*.hpp"
+        "${INCLUDE_DIR}/tests/*.h" "${INCLUDE_DIR}/tests/*.hpp")
 list(REMOVE_ITEM TEST_SOURCES ${SRC_DIR}/main.cpp)
 
-list(APPEND TEST_SOURCES ${TESTS_SRC_DIR}/main_test.cpp)
-
-list(APPEND TEST_HEADERS ${TESTS_INCLUDE_DIR}/main_test.h)
-
-# Add tests executables
-add_executable(${main_test} ${TEST_SOURCES} ${TEST_HEADERS})
-
-# Create list with tests names
-set(TESTS_LIST ${main_test})
-
-foreach(TARGET ${TESTS_LIST})
-    # Set target properties
-    set_target_properties(${TARGET} PROPERTIES ${TARGET_PROPERTIES})
-    # Include directories
-    target_include_directories(${TARGET} PRIVATE ${INCLUDE_DIR} ${TESTS_INCLUDE_DIR})
-    # Link libraries
-    target_link_libraries(${TARGET} PRIVATE Qt5::Test)
-    # Set compile options
-    target_compile_options(${TARGET} PRIVATE ${COMPILE_OPTIONS})
-endforeach()
+add_executable(test_${PROJECT_NAME} ${TEST_SOURCES} ${TEST_HEADERS})
+set_target_properties(test_${PROJECT_NAME} PROPERTIES ${TARGET_PROPERTIES})
+target_link_libraries(test_${PROJECT_NAME} PRIVATE Qt5::Test)
+target_compile_options(test_${PROJECT_NAME} PRIVATE ${COMPILE_OPTIONS})
 
 enable_testing()
-foreach(TESTNAME ${TESTS_LIST})
-    add_test(${TESTNAME} ${BUILD_DIR}/${TESTNAME})
-endforeach()
+add_test(test_${PROJECT_NAME} ${BUILD_DIR}/test_${PROJECT_NAME})
