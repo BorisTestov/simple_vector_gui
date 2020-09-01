@@ -10,7 +10,7 @@ script:
 - doxygen doxyfile.conf
 - mkdir -p build
 - cd build
-- cmake ../cmake
+- cmake ..
 - cmake --build .
 - make test
 - cmake --build . --target package
