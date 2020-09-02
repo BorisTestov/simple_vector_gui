@@ -17,36 +17,34 @@ enum class Color
 /**
  * @brief Интерфейс фигуры
  */
-class IShape
+class AbstractPrimitive
 {
 public:
     virtual void draw() = 0;
-    virtual int getX() = 0;
-    virtual void setX(int x) = 0;
-    virtual int getY() = 0;
-    virtual void setY(int y) = 0;
-    virtual Color getColor() = 0;
-    virtual bool setColor(Color color) = 0;
-    virtual bool getId() = 0;
-    IShape(int x, int y);
-    virtual ~IShape() = default;
-    //    virtual void setId() = 0;
+    int getX() const;
+    int getY() const;
+    Color getColor() const;
+    [[nodiscard]] int getId() const;
+    AbstractPrimitive(int x, int y);
+    virtual ~AbstractPrimitive() = default;
 
 protected:
     int x, y, id;
     Color color;
-    void setId();
+    void setId() const;
+    void setX(int newX);
+    void setY(int newY);
+    void setColor(Color newColor);
 };
 
 /**
  * @brief Прямоугольник
  */
-class Square : public IShape
+class Rectangle : public AbstractPrimitive
 {
 public:
-    Square(int x, int y, int w, int h);
-    void draw();
-    //    void setId();
+    Rectangle(int x, int y, int w, int h);
+    void draw() override;
 
 private:
     int w, h;
@@ -55,12 +53,11 @@ private:
 /**
  * @brief Круг
  */
-class Circle : public IShape
+class Circle : public AbstractPrimitive
 {
 public:
     Circle(int x, int y, int radius);
-    void draw();
-    //    void setId();
+    void draw() override;
 
 private:
     int radius;
