@@ -6,10 +6,16 @@ IShape::IShape(int x, int y)
     this->y = y;
 }
 
+void IShape::setId()
+{
+    std::cout << "ID was set for shape with x: " << x << " and y: " << y << std::endl;
+}
+
 Circle::Circle(int x, int y, int radius) :
     IShape(x, y)
 {
     this->radius = radius;
+    setId();
 }
 
 void Circle::draw()
@@ -22,6 +28,7 @@ Square::Square(int x, int y, int w, int h) :
 {
     this->h = h;
     this->w = w;
+    setId();
 }
 
 void Square::draw()

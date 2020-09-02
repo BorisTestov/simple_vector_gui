@@ -30,10 +30,12 @@ public:
     virtual bool getId() = 0;
     IShape(int x, int y);
     virtual ~IShape() = default;
+    //    virtual void setId() = 0;
 
 protected:
     int x, y, id;
     Color color;
+    void setId();
 };
 
 /**
@@ -44,6 +46,7 @@ class Square : public IShape
 public:
     Square(int x, int y, int w, int h);
     void draw();
+    //    void setId();
 
 private:
     int w, h;
@@ -57,6 +60,7 @@ class Circle : public IShape
 public:
     Circle(int x, int y, int radius);
     void draw();
+    //    void setId();
 
 private:
     int radius;
