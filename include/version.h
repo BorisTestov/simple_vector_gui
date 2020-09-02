@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
 #include <sstream>
+#include <string>
 
 #define PROJECT_VERSION_PATCH 0
 #define PROJECT_VERSION_MAJOR 0
