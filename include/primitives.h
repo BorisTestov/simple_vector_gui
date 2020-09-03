@@ -25,6 +25,7 @@ public:
     int getY() const;
     Color getColor() const;
     [[nodiscard]] int getId() const;
+    AbstractPrimitive();
     AbstractPrimitive(int x, int y);
     virtual ~AbstractPrimitive() = default;
 
@@ -43,8 +44,11 @@ protected:
 class Rectangle : public AbstractPrimitive
 {
 public:
+    Rectangle();
     Rectangle(int x, int y, int w, int h);
     void draw() override;
+    int getW() const;
+    int getH() const;
 
 private:
     int w, h;
@@ -56,8 +60,10 @@ private:
 class Circle : public AbstractPrimitive
 {
 public:
+    Circle();
     Circle(int x, int y, int radius);
     void draw() override;
+    int getRadius() const;
 
 private:
     int radius;
