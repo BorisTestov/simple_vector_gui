@@ -2,47 +2,51 @@
 
 #include <utility>
 
+// Model
+
 Model::Model()
 {
-    this->document = std::make_shared<Document>();
+    _document = std::make_shared<Document>();
 }
 
 void Model::clearDocument()
 {
-    document->clear();
+    _document->clear();
 }
 
 void Model::setDocument(std::shared_ptr<Document> newDocument)
 {
-    this->document = std::move(newDocument);
+    _document = newDocument;
     refresh();
 }
 
 const std::shared_ptr<Document> Model::getDocument() const
 {
-    return document;
+    return _document;
 }
 
-void Model::addPrimitive(std::unique_ptr<AbstractPrimitive>&& primitive)
+void Model::addPrimitive(std::unique_ptr<AbstractPrimitive> primitive)
 {
-    document->push_back(move(primitive));
+    _document->push_back(move(primitive));
 }
 
 void Model::removePrimitive(int eraseIndex)
 {
-    document->erase(document->begin() + eraseIndex);
+    _document->erase(_document->begin() + eraseIndex);
     refresh();
 }
 
-void Model::setController(Controller& newController)
+void Model::setController(const Controller& newController)
 {
-    this->controller = &newController;
+    _controller = std::make_shared<Controller>(newController);
 }
 
 void Model::refresh()
 {
-    controller->refreshCanvas();
+    _controller->refreshCanvas();
 }
+
+// View
 
 void View::clearView() const
 {
@@ -58,38 +62,40 @@ void View::drawPrimitives(const std::shared_ptr<Document>& primitives) const
     }
 }
 
-Controller::Controller(Model& model, const View& view)
+// Controller
+
+Controller::Controller(const Model& model, const View& view)
 {
-    this->model = &model;
-    this->view = &view;
+    _model = std::make_shared<Model>(model);
+    _view = std::make_shared<View>(view);
 }
 
 void Controller::createNewDocument()
 {
-    model->clearDocument();
+    _model->clearDocument();
 }
 
-void Controller::exportToFile(const std::string& filename)
+void Controller::exportToFile(const std::string& filename) const
 {
-    auto exportedDocument = model->getDocument();
+    auto exportedDocument = _model->getDocument();
     std::cout << "Export to file: " << filename << std::endl;
 }
 
-void Controller::importFromFile(const std::string& filename)
+void Controller::importFromFile(const std::string& filename) const
 {
     auto importedFile = std::make_shared<Document>();
-    model->setDocument(importedFile);
+    _model->setDocument(importedFile);
     std::cout << "Imported from file: " << filename << std::endl;
 }
 
 void Controller::addPrimitive(std::unique_ptr<AbstractPrimitive> primitive)
 {
-    model->addPrimitive(std::move(primitive));
+    _model->addPrimitive(std::move(primitive));
 }
 
 void Controller::removePrimitive(int primitiveId)
 {
-    auto document = model->getDocument();
+    auto document = _model->getDocument();
     int eraseIndex = -1;
     for (unsigned long i = 0; i < document->size(); i++)
     {
@@ -101,11 +107,11 @@ void Controller::removePrimitive(int primitiveId)
     }
     if (eraseIndex > -1)
     {
-        model->removePrimitive(eraseIndex);
+        _model->removePrimitive(eraseIndex);
     }
 }
 
 void Controller::refreshCanvas()
 {
-    view->drawPrimitives(model->getDocument());
+    _view->drawPrimitives(_model->getDocument());
 }

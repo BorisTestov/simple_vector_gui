@@ -4,12 +4,9 @@
 
 #include <iostream>
 #include <map>
-#include <vector>
 
 int main()
 {
-    // TODO: Добавить описания к методам
-    // TODO: Добавить тесты
     std::cout << "Current version: " << version() << std::endl;
     Model model;
     View view;

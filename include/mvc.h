@@ -1,11 +1,20 @@
+#pragma once
+
 #include "primitives.h"
 
 #include <memory>
 #include <vector>
 
-using Document = std::vector<std::unique_ptr<AbstractPrimitive>>;
-
+class Model;
+class View;
 class Controller;
+
+using AbstractPrimitiveUptr = std::unique_ptr<AbstractPrimitive>;
+using Document = std::vector<AbstractPrimitiveUptr>;
+using DocumentPtr = std::shared_ptr<Document>;
+using ModelPtr = std::shared_ptr<Model>;
+using ViewPtr = std::shared_ptr<View>;
+using ControllerPtr = std::shared_ptr<Controller>;
 
 /**
  * @brief Класс Model для хранения данных
@@ -22,17 +31,17 @@ public:
      * @brief задать новый документ
      * @param newDocument новый документ
      */
-    void setDocument(std::shared_ptr<Document> newDocument);
+    void setDocument(DocumentPtr newDocument);
     /**
      * @brief Получить текущий документ
      * @return std::shared_ptr<Document> поинтер на документ
      */
-    [[nodiscard]] const std::shared_ptr<Document> getDocument() const;
+    [[nodiscard]] const DocumentPtr getDocument() const;
     /**
      * @brief Добавить примитив в документ
      * @param primitive Примитив для добавления
      */
-    void addPrimitive(std::unique_ptr<AbstractPrimitive>&& primitive);
+    void addPrimitive(AbstractPrimitiveUptr primitive);
     /**
      * @brief Удалить примитив из документа
      * @param eraseIndex индек примитива для удаления
@@ -42,15 +51,15 @@ public:
      * @brief Задать контроллер
      * @param newController новый контроллер
      */
-    void setController(Controller& newController);
+    void setController(const Controller& newController);
     /**
      * @brief Обновить содержимое
      */
     void refresh();
 
 private:
-    std::shared_ptr<Document> document;
-    Controller* controller;
+    DocumentPtr _document;
+    ControllerPtr _controller;
 };
 
 /**
@@ -67,7 +76,7 @@ public:
      * @brief Отобразить примитивы
      * @param primitives Примитивы для отображения
      */
-    void drawPrimitives(const std::shared_ptr<Document>& primitives) const;
+    void drawPrimitives(const DocumentPtr& primitives) const;
 };
 
 /**
@@ -76,7 +85,7 @@ public:
 class Controller
 {
 public:
-    Controller(Model& model, const View& view);
+    Controller(const Model& model, const View& view);
     /**
      * @brief Создать новый документ
      */
@@ -85,28 +94,28 @@ public:
      * @brief Экспорт в файл
      * @param filename Имя файла
      */
-    void exportToFile(const std::string& filename);
+    void exportToFile(const std::string& filename) const;
     /**
      * @brief Импорт из файла
      * @param filename имя файла
      */
-    void importFromFile(const std::string& filename);
+    [[maybe_unused]] void importFromFile(const std::string& filename) const;
     /**
      * @brief Добавить примитив
      * @param primitive Примитив для добавления
      */
-    void addPrimitive(std::unique_ptr<AbstractPrimitive> primitive);
+    void addPrimitive(AbstractPrimitiveUptr primitive);
     /**
      * @brief Удалить примитив
      * @param primitiveId id Примитива для удаления
      */
-    void removePrimitive(int primitiveId);
+    [[maybe_unused]] void removePrimitive(int primitiveId);
     /**
      * @brief Обновить холст
      */
     void refreshCanvas();
 
 private:
-    Model* model;
-    const View* view;
+    ModelPtr _model;
+    ViewPtr _view;
 };

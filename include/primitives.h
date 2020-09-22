@@ -30,8 +30,8 @@ public:
     virtual ~AbstractPrimitive() = default;
 
 protected:
-    int x, y, id;
-    Color color;
+    int _x, _y, _id;
+    Color _color;
     void setId() const;
     void setX(int newX);
     void setY(int newY);
@@ -51,7 +51,7 @@ public:
     int getH() const;
 
 private:
-    int w, h;
+    int _w, _h;
 };
 
 /**
@@ -66,5 +66,5 @@ public:
     int getRadius() const;
 
 private:
-    int radius;
+    int _radius;
 };

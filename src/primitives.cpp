@@ -2,107 +2,107 @@
 
 AbstractPrimitive::AbstractPrimitive()
 {
-    this->x = 0;
-    this->y = 0;
+    _x = 0;
+    _y = 0;
 }
 
 AbstractPrimitive::AbstractPrimitive(int x, int y)
 {
-    this->x = x;
-    this->y = y;
+    _x = x;
+    _y = y;
 }
 
 void AbstractPrimitive::setId() const
 {
-    std::cout << "ID was set for shape with x: " << x << " and y: " << y << std::endl;
+    std::cout << "ID was set for shape with x: " << getX() << " and y: " << getY() << std::endl;
 }
 
 int AbstractPrimitive::getId() const
 {
-    return id;
+    return _id;
 }
 
 void AbstractPrimitive::setX(int newX)
 {
-    this->x = newX;
+    _x = newX;
 }
 
 int AbstractPrimitive::getX() const
 {
-    return x;
+    return _x;
 }
 
 void AbstractPrimitive::setY(int newY)
 {
-    this->y = newY;
+    _y = newY;
 }
 
 int AbstractPrimitive::getY() const
 {
-    return y;
+    return _y;
 }
 
 void AbstractPrimitive::setColor(Color newColor)
 {
-    this->color = newColor;
+    _color = newColor;
 }
 
 Color AbstractPrimitive::getColor() const
 {
-    return color;
+    return _color;
 }
 
 Circle::Circle() :
     AbstractPrimitive()
 {
-    this->radius = 0;
+    _radius = 0;
     setId();
 }
 
 Circle::Circle(int x, int y, int radius) :
     AbstractPrimitive(x, y)
 {
-    this->radius = radius;
+    _radius = radius;
     setId();
 }
 
 int Circle::getRadius() const
 {
-    return radius;
+    return _radius;
 }
 
 void Circle::draw()
 {
-    std::cout << "Circle with radius " << radius << " was spawned in x: " << x << " y: " << y << "!" << std::endl;
+    std::cout << "Circle with radius " << getRadius() << " was spawned in x: " << getX() << " y: " << getY() << "!" << std::endl;
 }
 
 Rectangle::Rectangle() :
     AbstractPrimitive()
 {
-    this->w = 0;
-    this->h = 0;
+    _w = 0;
+    _h = 0;
     setId();
 }
 
 Rectangle::Rectangle(int x, int y, int w, int h) :
     AbstractPrimitive(x, y)
 {
-    this->h = h;
-    this->w = w;
+    _h = h;
+    _w = w;
     setId();
 }
 
 void Rectangle::draw()
 {
-    std::cout << "Rectangle with width " << w << " and height " << h << " was spawned in x: " << x << " y: " << y << "!" << std::endl;
+    std::cout << "Rectangle with width " << getW() << " and height " << getH() << " was spawned in x: " << getX() << " y: " << getY() << "!" << std::endl;
 }
 
 int Rectangle::getW() const
 {
-    return w;
+    return _w;
 }
 
 int Rectangle::getH() const
 {
-    return h;
+    return _h;
 }
