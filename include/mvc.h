@@ -15,6 +15,7 @@ using DocumentPtr = std::shared_ptr<Document>;
 using ModelPtr = std::shared_ptr<Model>;
 using ViewPtr = std::shared_ptr<View>;
 using ControllerPtr = std::shared_ptr<Controller>;
+using ControllerWptr = std::weak_ptr<Controller>;
 
 /**
  * @brief Класс Model для хранения данных
@@ -51,7 +52,7 @@ public:
      * @brief Задать контроллер
      * @param newController новый контроллер
      */
-    void setController(const Controller& newController);
+    void setController(Controller& newController);
     /**
      * @brief Обновить содержимое
      */
@@ -59,7 +60,7 @@ public:
 
 private:
     DocumentPtr _document;
-    ControllerPtr _controller;
+    ControllerWptr _controller;
 };
 
 /**

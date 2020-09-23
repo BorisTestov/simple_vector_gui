@@ -36,14 +36,18 @@ void Model::removePrimitive(int eraseIndex)
     refresh();
 }
 
-void Model::setController(const Controller& newController)
+void Model::setController(Controller& newController)
 {
     _controller = std::make_shared<Controller>(newController);
 }
 
 void Model::refresh()
 {
-    _controller->refreshCanvas();
+    ControllerPtr _controller_lock = _controller.lock();
+    if (_controller_lock)
+    {
+        _controller_lock->refreshCanvas();
+    }
 }
 
 // View

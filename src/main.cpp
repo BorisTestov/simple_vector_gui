@@ -12,6 +12,7 @@ int main()
     auto view = std::make_shared<View>();
     Controller controller(model, view);
     model->setController(controller);
+
     controller.createNewDocument();
     controller.addPrimitive(std::make_unique<Circle>(100, 50, 20));
     controller.addPrimitive(std::make_unique<Rectangle>(0, 10, 20, 80));
