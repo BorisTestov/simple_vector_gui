@@ -85,7 +85,7 @@ public:
 class Controller
 {
 public:
-    Controller(const Model& model, const View& view);
+    Controller(const ModelPtr& model, const ViewPtr& view);
     /**
      * @brief Создать новый документ
      */

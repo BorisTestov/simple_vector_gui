@@ -64,10 +64,10 @@ void View::drawPrimitives(const DocumentPtr& primitives) const
 
 // Controller
 
-Controller::Controller(const Model& model, const View& view)
+Controller::Controller(const ModelPtr& model, const ViewPtr& view)
 {
-    _model = std::make_shared<Model>(model);
-    _view = std::make_shared<View>(view);
+    _model = model;
+    _view = view;
 }
 
 void Controller::createNewDocument()
