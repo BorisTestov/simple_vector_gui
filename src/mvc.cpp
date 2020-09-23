@@ -14,18 +14,18 @@ void Model::clearDocument()
     _document->clear();
 }
 
-void Model::setDocument(std::shared_ptr<Document> newDocument)
+void Model::setDocument(DocumentPtr newDocument)
 {
     _document = newDocument;
     refresh();
 }
 
-const std::shared_ptr<Document> Model::getDocument() const
+const DocumentPtr Model::getDocument() const
 {
     return _document;
 }
 
-void Model::addPrimitive(std::unique_ptr<AbstractPrimitive> primitive)
+void Model::addPrimitive(AbstractPrimitiveUptr primitive)
 {
     _document->push_back(move(primitive));
 }
@@ -53,7 +53,7 @@ void View::clearView() const
     std::cout << "Canvas was cleared" << std::endl;
 }
 
-void View::drawPrimitives(const std::shared_ptr<Document>& primitives) const
+void View::drawPrimitives(const DocumentPtr& primitives) const
 {
     clearView();
     for (auto& primitive : *primitives)
@@ -88,7 +88,7 @@ void Controller::importFromFile(const std::string& filename) const
     std::cout << "Imported from file: " << filename << std::endl;
 }
 
-void Controller::addPrimitive(std::unique_ptr<AbstractPrimitive> primitive)
+void Controller::addPrimitive(AbstractPrimitiveUptr primitive)
 {
     _model->addPrimitive(std::move(primitive));
 }
