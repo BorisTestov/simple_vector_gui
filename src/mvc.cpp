@@ -36,9 +36,9 @@ void Model::removePrimitive(int eraseIndex)
     refresh();
 }
 
-void Model::setController(Controller& newController)
+void Model::setController(ControllerPtr controller)
 {
-    _controller = std::make_shared<Controller>(newController);
+    _controller = controller;
 }
 
 void Model::refresh()

@@ -50,9 +50,9 @@ public:
     void removePrimitive(int eraseIndex);
     /**
      * @brief Задать контроллер
-     * @param newController новый контроллер
+     * @param controller новый контроллер
      */
-    void setController(Controller& newController);
+    void setController(ControllerPtr controller);
     /**
      * @brief Обновить содержимое
      */
